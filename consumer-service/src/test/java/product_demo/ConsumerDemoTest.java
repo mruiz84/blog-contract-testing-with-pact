@@ -1,10 +1,13 @@
 package product_demo;
 
-import au.com.dius.pact.consumer.ConsumerPactTest;
+import au.com.dius.pact.consumer.Pact;
+import au.com.dius.pact.consumer.PactProviderRule;
+import au.com.dius.pact.consumer.PactVerification;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.PactFragment;
+import org.junit.Rule;
+import org.junit.Test;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,11 +16,15 @@ import static junit.framework.TestCase.assertEquals;
 import static product_demo.TestConstants.*;
 
 /**
- * The purpose of this test class is to demonstrate the style of creating a contract test with PACT and no annotation style.
+ * The purpose of this test class is to demonstrate the style of creating a contract test with PACT and annotation style.
  */
-public class ConsumerDemoTest extends ConsumerPactTest {
-    protected PactFragment createFragment(PactDslWithProvider pactDslWithProvider) {
-        //@formatter:off
+public class ConsumerDemoTest {
+
+    @Rule
+    public PactProviderRule pactProviderRule = new PactProviderRule("product-provider-demo", this);
+
+    @Pact(consumer = "product-consumer-demo")
+    public PactFragment createFragment(PactDslWithProvider pactDslWithProvider) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json;charset=UTF-8");
         return pactDslWithProvider
@@ -35,18 +42,13 @@ public class ConsumerDemoTest extends ConsumerPactTest {
                         "\"type\": \"testing product\"" +
                         "}")
                 .toFragment();
-         //@formatter:on
     }
 
-    protected String providerName() {
-        return "product-provider-demo";
-    }
+    @Test
+    @PactVerification
+    public void runTest() throws Exception {
+        String url = pactProviderRule.getConfig().url();
 
-    protected String consumerName() {
-        return "product-consumer-demo";
-    }
-
-    protected void runTest(String url) throws IOException {
         URI productInfoUri = URI.create(String.format("%s/%s", url, "product?id=537"));
         ProductRestFetcher productRestFetcher = new ProductRestFetcher();
         Product product = productRestFetcher.fetchProductInfo(productInfoUri);

@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 
 @Component
-public class ProductRestFetcher {
+class ProductRestFetcher {
     /**
      * Fetches the product data that is being received via REST from another service.
      *

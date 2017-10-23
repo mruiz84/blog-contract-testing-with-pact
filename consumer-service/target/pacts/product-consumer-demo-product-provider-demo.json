@@ -1,38 +1,46 @@
 {
-    "provider": {
-        "name": "product-provider-demo"
-    },
-    "consumer": {
-        "name": "product-consumer-demo"
-    },
-    "interactions": [
-        {
-            "description": "ConsumerDemoTest interaction",
-            "request": {
-                "method": "GET",
-                "path": "/product",
-                "query": "id=537"
-            },
-            "response": {
-                "status": 200,
-                "headers": {
-                    "Content-Type": "application/json;charset=UTF-8"
-                },
-                "body": {
-                    "description": "Consumer Test verifies provider",
-                    "name": "Consumer Test",
-                    "type": "testing product"
-                }
-            },
-            "providerState": "test demo first state"
+  "provider": {
+    "name": "product-provider-demo"
+  },
+  "consumer": {
+    "name": "product-consumer-demo"
+  },
+  "interactions": [
+    {
+      "description": "ConsumerDemoTest interaction",
+      "request": {
+        "method": "GET",
+        "path": "/product",
+        "query": {
+          "id": [
+            "537"
+          ]
         }
-    ],
-    "metadata": {
-        "pact-specification": {
-            "version": "2.0.0"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json;charset\u003dUTF-8"
         },
-        "pact-jvm": {
-            "version": "3.3.3"
+        "body": {
+          "description": "Consumer Test verifies provider",
+          "name": "Consumer Test",
+          "type": "testing product"
         }
+      },
+      "providerStates": [
+        {
+          "name": "test demo first state"
+        }
+      ]
     }
+  ],
+  "metadata": {
+    "pact-specification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "3.5.8"
+    }
+  }
 }

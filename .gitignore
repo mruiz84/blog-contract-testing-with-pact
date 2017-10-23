@@ -1,0 +1,11 @@
+.idea/
+
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+
+consumer-service/out/
+
+provider-service/out/
+provider-service/build/
